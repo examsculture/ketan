@@ -1,12 +1,8 @@
+// src/app/api/payment/start/route.ts
+
 import { NextResponse } from "next/server";
 import crypto from "crypto";
-import { createClient } from "@supabase/supabase-js";
-
-// ✅ Initialize Supabase server-side
-const supabase = createClient(
-  process.env.SUPABASE_URL!,
-  process.env.SUPABASE_ANON_KEY!
-);
+import { supabase } from "@/lib/supabaseServer"; // ✅ Replaces direct createClient
 
 // ✅ Category mapping
 const CATEGORY_CONFIG: Record<

@@ -1,10 +1,7 @@
-import { createClient } from '@supabase/supabase-js';
-import { NextResponse } from 'next/server';
+// src/app/api/auth/forgot-password/route.ts
 
-const supabase = createClient(
-  process.env.SUPABASE_URL!,
-  process.env.SUPABASE_ANON_KEY!
-);
+import { NextResponse } from "next/server";
+import { supabase } from "@/lib/supabaseServer"; // ✅ use server version
 
 export async function POST(req: Request) {
   const { email } = await req.json();
