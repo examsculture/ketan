@@ -1,91 +1,30 @@
-"use client";
-import { useState } from "react";
+// src/app/api/auth/forgot-password/route.ts
 
-export default function ForgotPasswordPage() {
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
+import { createClient } from '@supabase/supabase-js';
+import { NextResponse } from 'next/server';
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setMessage("");
-    setError("");
+const supabaseUrl = process.env.SUPABASE_URL!;
+const supabaseKey = process.env.SUPABASE_ANON_KEY!;
+const supabase = createClient(supabaseUrl, supabaseKey);
 
-    const res = await fetch("/api/auth/forgot-password", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email }),
+export async function POST(request: Request) {
+  try {
+    const { email } = await request.json();
+
+    if (!email) {
+      return NextResponse.json({ error: "Email is required" }, { status: 400 });
+    }
+
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/reset-password`, // Optional
     });
 
-    const data = await res.json();
-    if (res.ok) {
-      setMessage(data.message);
-    } else {
-      setError(data.error);
+    if (error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
     }
-  };
 
-  return (
-    <main style={styles.container}>
-      <h1 style={styles.heading}>Reset Your Password</h1>
-      <form onSubmit={handleSubmit} style={styles.form}>
-        <input
-          type="email"
-          placeholder="Enter your email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          style={styles.input}
-        />
-        <button type="submit" style={styles.button}>Send Reset Link</button>
-      </form>
-      {message && <p style={styles.success}>{message}</p>}
-      {error && <p style={styles.error}>{error}</p>}
-    </main>
-  );
+    return NextResponse.json({ message: "Password reset email sent!" }, { status: 200 });
+  } catch (err) {
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+  }
 }
-
-const styles = {
-  container: {
-    padding: "2rem",
-    textAlign: "center" as const,
-    fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
-  },
-  heading: {
-    fontSize: "1.8rem",
-    marginBottom: "1rem",
-  },
-  form: {
-    display: "flex",
-    flexDirection: "column" as const,
-    gap: "1rem",
-    alignItems: "center",
-    width: "100%",
-    maxWidth: "400px",
-    margin: "0 auto",
-  },
-  input: {
-    padding: "0.75rem",
-    fontSize: "1rem",
-    width: "100%",
-    border: "1px solid #ccc",
-    borderRadius: "6px",
-  },
-  button: {
-    padding: "0.75rem",
-    fontSize: "1rem",
-    background: "#2563eb",
-    color: "#fff",
-    border: "none",
-    borderRadius: "6px",
-    cursor: "pointer",
-  },
-  success: {
-    color: "#22c55e",
-    marginTop: "1rem",
-  },
-  error: {
-    color: "#dc2626",
-    marginTop: "1rem",
-  },
-};
