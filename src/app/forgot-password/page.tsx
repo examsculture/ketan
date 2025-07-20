@@ -1,30 +1,45 @@
-// src/app/api/auth/forgot-password/route.ts
+"use client";
+import { useState } from "react";
 
-import { createClient } from '@supabase/supabase-js';
-import { NextResponse } from 'next/server';
+export default function ForgotPasswordPage() {
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
 
-const supabaseUrl = process.env.SUPABASE_URL!;
-const supabaseKey = process.env.SUPABASE_ANON_KEY!;
-const supabase = createClient(supabaseUrl, supabaseKey);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setMessage("");
+    setError("");
 
-export async function POST(request: Request) {
-  try {
-    const { email } = await request.json();
-
-    if (!email) {
-      return NextResponse.json({ error: "Email is required" }, { status: 400 });
-    }
-
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/reset-password`, // Optional
+    const res = await fetch("/api/auth/forgot-password", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
     });
 
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+    const data = await res.json();
+    if (res.ok) {
+      setMessage(data.message);
+    } else {
+      setError(data.error);
     }
+  };
 
-    return NextResponse.json({ message: "Password reset email sent!" }, { status: 200 });
-  } catch (err) {
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
-  }
+  return (
+    <main>
+      <h1>Reset Password</h1>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="email"
+          placeholder="Your email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <button type="submit">Send Reset Link</button>
+      </form>
+      {message && <p style={{ color: "green" }}>{message}</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
+    </main>
+  );
 }
