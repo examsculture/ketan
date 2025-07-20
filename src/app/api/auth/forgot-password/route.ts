@@ -1,5 +1,10 @@
-import { NextResponse } from "next/server";
-import { supabase } from "@/lib/supabaseClient";
+import { createClient } from '@supabase/supabase-js';
+import { NextResponse } from 'next/server';
+
+const supabase = createClient(
+  process.env.SUPABASE_URL!,
+  process.env.SUPABASE_ANON_KEY!
+);
 
 export async function POST(req: Request) {
   const { email } = await req.json();
@@ -9,7 +14,7 @@ export async function POST(req: Request) {
   }
 
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: "http://localhost:3000/reset-password",
+    redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/reset-password`,
   });
 
   if (error) {
