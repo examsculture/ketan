@@ -9,12 +9,12 @@ const CATEGORY_CONFIG: Record<
   string,
   { amount: string; productinfo: string }
 > = {
-  nmms: { amount: "26", productinfo: "NMMS Subscription" },
-  "gyan-sadhana": { amount: "26", productinfo: "Gyan Sadhana Subscription" },
-  pse: { amount: "26", productinfo: "PSE Subscription" },
-  cet: { amount: "26", productinfo: "CET Subscription" },
-  jnv: { amount: "26", productinfo: "JNV Subscription" },
-  "general-knowledge": { amount: "26", productinfo: "General Knowledge Subscription" },
+  nmms: { amount: "49", productinfo: "NMMS Subscription" },
+  "gyan-sadhana": { amount: "49", productinfo: "Gyan Sadhana Subscription" },
+  pse: { amount: "49", productinfo: "PSE Subscription" },
+  cet: { amount: "49", productinfo: "CET Subscription" },
+  jnv: { amount: "49", productinfo: "JNV Subscription" },
+  "general-knowledge": { amount: "49", productinfo: "General Knowledge Subscription" },
 };
 
 export async function POST(req: Request) {

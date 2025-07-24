@@ -19,6 +19,16 @@ export default function PSEPage() {
       <p style={styles.subtext}>
         Select a test below. You need an active PSE subscription to access.
       </p>
+
+      {/* ✅ ₹49 Info Box */}
+      <div style={styles.infoBox}>
+        <h3 style={styles.infoTitle}>🎯 PSE Plan Access – ₹49/month</h3>
+        <p style={styles.infoText}>
+          Start your PSE preparation with unlimited practice access for just <strong>₹49</strong>. <br />
+          Plan is valid for <strong>30 days</strong> with full access to all PSE mock tests.
+        </p>
+      </div>
+
       <div style={styles.grid}>
         {tests.map((test) => (
           <Link
@@ -55,6 +65,27 @@ const styles: { [key: string]: React.CSSProperties } = {
     color: "#475569",
     marginBottom: "1.5rem",
     textAlign: "center",
+  },
+  infoBox: {
+    background: "linear-gradient(to right, #fef9c3, #fde68a)",
+    padding: "1.5rem",
+    borderRadius: "12px",
+    border: "1px solid #facc15",
+    maxWidth: "750px",
+    marginBottom: "2rem",
+    textAlign: "center",
+    boxShadow: "0 4px 12px rgba(0,0,0,0.06)",
+  },
+  infoTitle: {
+    fontSize: "1.2rem",
+    fontWeight: 700,
+    color: "#92400e",
+    marginBottom: "0.75rem",
+  },
+  infoText: {
+    fontSize: "1rem",
+    color: "#78350f",
+    lineHeight: 1.6,
   },
   grid: {
     display: "grid",

@@ -83,7 +83,7 @@ export default function PSECheckout() {
         disabled={loading}
         style={styles.button}
       >
-        {loading ? "Preparing Payment..." : "Pay ₹26"}
+        {loading ? "Preparing Payment..." : "Pay ₹49"}
       </button>
     </main>
   );

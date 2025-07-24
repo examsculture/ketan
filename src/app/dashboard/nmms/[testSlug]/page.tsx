@@ -141,7 +141,7 @@ export default function NMMSIndividualTestPage() {
       <h1 style={styles.heading}>
         NMMS {testSlug?.toString().replace("-", " ").toUpperCase()}
       </h1>
-
+  
       {!submitted && (
         <>
           {timerEnabled ? (

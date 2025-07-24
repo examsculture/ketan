@@ -1,17 +1,20 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { supabase } from "../lib/supabaseClient";
 
 export default function Header() {
   const router = useRouter();
+  const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
     router.push("/login");
   };
+
+  const isDashboard = pathname.startsWith("/dashboard");
 
   return (
     <header style={styles.header}>
@@ -33,19 +36,22 @@ export default function Header() {
           ...(menuOpen ? styles.navOpen : {}),
         }}
       >
-         <Link href="/" style={styles.navLink} onClick={() => setMenuOpen(false)}>
-          Home
-        </Link>
+        {/* Show Home only outside dashboard */}
+        {!isDashboard && (
+          <Link href="/" style={styles.navLink} onClick={() => setMenuOpen(false)}>
+            Home
+          </Link>
+        )}
         <Link href="/dashboard" style={styles.navLink} onClick={() => setMenuOpen(false)}>
           Dashboard
         </Link>
         <Link href="/dashboard/leaderboard" style={styles.link}>
-        🏆 Leaderboard
-      </Link>
+          🏆 Leaderboard
+        </Link>
         <Link href="/dashboard/profile" style={styles.navLink} onClick={() => setMenuOpen(false)}>
           Profile
         </Link>
-       
+
         <button style={styles.logoutButton} onClick={handleLogout}>
           Logout
         </button>
@@ -82,7 +88,6 @@ const styles: { [key: string]: React.CSSProperties } = {
     alignItems: "center",
   },
   navOpen: {
-    // Mobile styles when open
     position: "absolute",
     top: "100%",
     left: 0,

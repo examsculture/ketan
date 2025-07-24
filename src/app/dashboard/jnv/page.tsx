@@ -19,6 +19,17 @@ export default function JNVPage() {
       <p style={styles.subtext}>
         Select a test below. You need an active JNV subscription to access.
       </p>
+
+      {/* ✅ Stylish ₹49 Info Box */}
+      <div style={styles.infoBox}>
+        <h3 style={styles.infoTitle}>📘 JNV Test Access for Just ₹49</h3>
+        <p style={styles.infoText}>
+          Get full access to all JNV practice tests for just <strong>₹49</strong>. Valid for <strong>30 days</strong>.
+          <br />
+          Take unlimited mock tests and boost your preparation!
+        </p>
+      </div>
+
       <div style={styles.grid}>
         {tests.map((test) => (
           <Link
@@ -55,6 +66,27 @@ const styles: { [key: string]: React.CSSProperties } = {
     color: "#475569",
     marginBottom: "1.5rem",
     textAlign: "center",
+  },
+  infoBox: {
+    background: "linear-gradient(to right, #fef3c7, #fde68a)",
+    padding: "1.5rem",
+    borderRadius: "12px",
+    border: "1px solid #facc15",
+    maxWidth: "750px",
+    marginBottom: "2rem",
+    textAlign: "center",
+    boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+  },
+  infoTitle: {
+    fontSize: "1.2rem",
+    fontWeight: 700,
+    color: "#92400e",
+    marginBottom: "0.75rem",
+  },
+  infoText: {
+    fontSize: "1rem",
+    color: "#78350f",
+    lineHeight: 1.6,
   },
   grid: {
     display: "grid",

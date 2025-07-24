@@ -19,6 +19,17 @@ export default function CETPage() {
       <p style={styles.subtext}>
         Select a test below. You need an active CET subscription to access.
       </p>
+
+      {/* ✅ Info Box */}
+      <div style={styles.infoBox}>
+        <h3 style={styles.infoTitle}>🧪 CET Access for ₹49/month</h3>
+        <p style={styles.infoText}>
+          Access all CET practice tests with just <strong>₹49</strong> per month.
+          <br />
+          Valid for <strong>30 days</strong> of unlimited mock test attempts.
+        </p>
+      </div>
+
       <div style={styles.grid}>
         {tests.map((test) => (
           <Link
@@ -55,6 +66,27 @@ const styles: { [key: string]: React.CSSProperties } = {
     color: "#475569",
     marginBottom: "1.5rem",
     textAlign: "center",
+  },
+  infoBox: {
+    background: "linear-gradient(to right, #e0f2fe, #bae6fd)",
+    padding: "1.5rem",
+    borderRadius: "12px",
+    border: "1px solid #38bdf8",
+    maxWidth: "750px",
+    marginBottom: "2rem",
+    textAlign: "center",
+    boxShadow: "0 4px 12px rgba(0,0,0,0.06)",
+  },
+  infoTitle: {
+    fontSize: "1.2rem",
+    fontWeight: 700,
+    color: "#0369a1",
+    marginBottom: "0.75rem",
+  },
+  infoText: {
+    fontSize: "1rem",
+    color: "#075985",
+    lineHeight: 1.6,
   },
   grid: {
     display: "grid",
